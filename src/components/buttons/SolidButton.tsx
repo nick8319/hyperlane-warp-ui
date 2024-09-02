@@ -2,7 +2,7 @@ import { PropsWithChildren, ReactElement } from 'react';
 
 interface ButtonProps {
   type?: 'submit' | 'reset' | 'button';
-  color?: 'white' | 'blue' | 'green' | 'red' | 'gray' | 'pink' | 'mint'; // defaults to blue
+  color?: 'white' | 'blue' | 'green' | 'red' | 'gray' | 'pink' | 'mint' | 'black'; // defaults to black
   bold?: boolean;
   classes?: string;
   icon?: ReactElement;
@@ -22,7 +22,7 @@ export function SolidButton(
     title,
     ...passThruProps
   } = props;
-  const color = _color ?? 'blue';
+  const color = _color ?? 'black';
 
   const base = 'flex items-center justify-center rounded-full transition-all duration-500';
   let baseColors, onHover, onActive;
@@ -54,6 +54,10 @@ export function SolidButton(
     baseColors = 'bg-gray-100 text-blue-500';
     onHover = 'hover:bg-gray-200';
     onActive = 'active:bg-gray-300';
+  } else if (color === 'black') {
+    baseColors = 'bg-black text-white';
+    onHover = 'hover:bg-black2 text-white';
+    onActive = 'active:bg-black2 text-white';
   }
   const onDisabled = 'disabled:bg-gray-300 disabled:text-gray-500';
   const weight = bold ? 'font-semibold' : '';

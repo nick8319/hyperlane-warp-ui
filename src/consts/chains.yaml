@@ -18,3 +18,21 @@
 #   protocol: ethereum
 #   rpcUrls:
 #     - http: http://127.0.0.1:8555
+satori:
+  blockExplorers:
+    - apiUrl: https://api.satori.vanascan.io/api
+      family: blockscout
+      name: Vanascan
+      url: https://satori.vanascan.io
+  chainId: 14801
+  displayName: Vana Satori Testnet
+  domainId: 14801
+  isTestnet: true
+  name: satori
+  nativeToken:
+    decimals: 18
+    name: Vana
+    symbol: VANA
+  protocol: ethereum
+  rpcUrls:
+    - http: https://rpc.satori.vana.org

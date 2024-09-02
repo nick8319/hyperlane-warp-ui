@@ -2,5 +2,61 @@
 # These configs will be merged with the warp routes in the configured registry
 # The input here is typically the output of the Hyperlane CLI warp deploy command
 ---
-tokens: []
+# yaml-language-server: $schema=../schema.json
+tokens:
+  - addressOrDenom: "0x1F16A6B0358835af5D642A0417A6D9af90Cd1cb6"
+    chainName: satori
+    connections:
+      - token: ethereum|sepolia|0x0C6Bb5c525b5548897d19eD625D6939d6A8b0E14
+    decimals: 18
+    name: Ether
+    standard: EvmHypSynthetic
+    symbol: WETH
+    logoURI: /logos/eth.svg
+  - addressOrDenom: "0x0C6Bb5c525b5548897d19eD625D6939d6A8b0E14"
+    chainName: sepolia
+    connections:
+      - token: ethereum|satori|0x1F16A6B0358835af5D642A0417A6D9af90Cd1cb6
+    decimals: 18
+    name: Ether
+    standard: EvmHypNative
+    symbol: ETH
+    logoURI: /logos/eth.svg
+  - addressOrDenom: "0xf0De77E5D89D7A2f417be20Cc31f4b033c79Bd9d"
+    chainName: satori
+    connections:
+      - token: ethereum|sepolia|0x598e67c51C4BB228A1a7249e955806371ca23719
+    decimals: 18
+    name: USD Token
+    standard: EvmHypSynthetic
+    symbol: USDT
+    logoURI: /logos/usdt.svg
+  - addressOrDenom: "0x598e67c51C4BB228A1a7249e955806371ca23719"
+    chainName: sepolia
+    collateralAddressOrDenom: "0x7f11f79DEA8CE904ed0249a23930f2e59b43a385"
+    connections:
+      - token: ethereum|satori|0xf0De77E5D89D7A2f417be20Cc31f4b033c79Bd9d
+    decimals: 18
+    name: USD Token
+    standard: EvmHypCollateral
+    symbol: USDT
+    logoURI: /logos/usdt.svg
+  - addressOrDenom: "0x669837b11e91531d0e7B3E826612ef5f86698866"
+    chainName: satori
+    connections:
+      - token: ethereum|sepolia|0x47f8e3a514907b8B46DD88d87Df748AE181cCd48
+    decimals: 18
+    name: Vana
+    standard: EvmHypNative
+    symbol: VANA
+    logoURI: /logos/vana.svg
+  - addressOrDenom: "0x47f8e3a514907b8B46DD88d87Df748AE181cCd48"
+    chainName: sepolia
+    connections:
+      - token: ethereum|satori|0x669837b11e91531d0e7B3E826612ef5f86698866
+    decimals: 18
+    name: Vana
+    standard: EvmHypSynthetic
+    symbol: WVANA
+    logoURI: /logos/vana.svg
 options: {}

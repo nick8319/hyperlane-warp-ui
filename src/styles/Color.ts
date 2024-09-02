@@ -21,6 +21,8 @@ export function classNameToColor(className) {
       return Color.primaryRed;
     case 'bg-gray-500':
       return Color.primaryGray;
+    case 'bg-black-500':
+      return Color.primaryBlack;
     default:
       throw new Error('Missing color for className: ' + className);
   }

@@ -13,7 +13,7 @@ interface Config {
   version: string; // Matches version number in package.json
   registryUrl: string | undefined; // Optional URL to use a custom registry instead of the published canonical version
   explorerApiKeys: Record<string, string>; // Optional map of API keys for block explorer
-  showTipBox: boolean; // Show/Hide the blue tip box above the transfer form
+  showTipBox: boolean; // Show/Hide the black tip box above the transfer form
   showDisabledTokens: boolean; // Show/Hide invalid token options in the selection modal
   walletConnectProjectId: string; // Project ID provided by walletconnect
   withdrawalWhitelist: string; // comma-separated list of CAIP2 chain IDs to which transfers are supported
@@ -28,7 +28,7 @@ export const config: Config = Object.freeze({
   registryUrl,
   explorerApiKeys,
   showTipBox: true,
-  showDisabledTokens: true,
+  showDisabledTokens: false,
   walletConnectProjectId,
   withdrawalWhitelist,
   transferBlacklist,

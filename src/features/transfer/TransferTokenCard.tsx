@@ -15,7 +15,7 @@ export function TransferTokenCard() {
             height="100%"
             width="100"
             rounded={true}
-            color={Color.primaryBlue}
+            color={Color.primaryBlack}
           />
         </div>
         <TransferTokenForm />

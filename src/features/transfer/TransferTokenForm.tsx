@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { Form, Formik, useFormikContext } from 'formik';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { TokenAmount } from '@hyperlane-xyz/sdk';
@@ -85,6 +85,7 @@ export function TransferTokenForm() {
 function SwapChainsButton({ disabled }: { disabled?: boolean }) {
   const { values, setFieldValue } = useFormikContext<TransferFormValues>();
   const { origin, destination } = values;
+  const selfAddressOrigin = useAccountAddressForChain(origin);
 
   const onClick = () => {
     if (disabled) return;
@@ -92,7 +93,7 @@ function SwapChainsButton({ disabled }: { disabled?: boolean }) {
     setFieldValue('destination', origin);
     // Reset other fields on chain change
     setFieldValue('tokenIndex', undefined);
-    setFieldValue('recipient', '');
+    setFieldValue('recipient', selfAddressOrigin);
   };
 
   return (
@@ -176,9 +177,22 @@ function AmountSection({ isNft, isReview }: { isNft: boolean; isReview: boolean 
 }
 
 function RecipientSection({ isReview }: { isReview: boolean }) {
-  const { values } = useFormikContext<TransferFormValues>();
+  const { values, setFieldValue } = useFormikContext<TransferFormValues>();
   const { balance } = useDestinationBalance(values);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const selfAddress = useAccountAddressForChain(values.destination);
+
   useRecipientBalanceWatcher(values.recipient, balance);
+
+  useEffect(() => {
+    if (selfAddress) {
+      setFieldValue('recipient', selfAddress);
+    }
+  }, [selfAddress, setFieldValue]);
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   return (
     <div className="mt-4">
@@ -188,15 +202,29 @@ function RecipientSection({ isReview }: { isReview: boolean }) {
         </label>
         <TokenBalance label="Remote balance" balance={balance} />
       </div>
-      <div className="relative w-full">
-        <TextField
-          name="recipient"
-          placeholder="0x123456..."
-          classes="w-full"
-          disabled={isReview}
-        />
-        <SelfButton disabled={isReview} />
-      </div>
+      {isExpanded ? (
+        <div className="relative w-full">
+          <TextField
+            name="recipient"
+            placeholder="0x123456..."
+            classes="w-full"
+            disabled={isReview}
+          />
+          <SelfButton disabled={isReview} />
+        </div>
+      ) : (
+        <div className="flex justify-between items-center">
+          <div className="text-sm truncate flex-1">{values.recipient}</div>
+          <button
+            type="button"
+            onClick={toggleExpand}
+            className="text-black text-sm ml-2"
+            disabled={isReview}
+          >
+            Change recipient
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -251,16 +279,16 @@ function ButtonSection({
     <div className="mt-4 flex items-center justify-between space-x-4">
       <SolidButton
         type="button"
-        color="gray"
+        color="black"
         onClick={() => setIsReview(false)}
         classes="px-6 py-1.5"
-        icon={<ChevronIcon direction="w" width={10} height={6} color={Color.primaryBlue} />}
+        icon={<ChevronIcon direction="w" width={10} height={6} color={Color.primaryBlack} />}
       >
         <span>Edit</span>
       </SolidButton>
       <SolidButton
         type="button"
-        color="pink"
+        color="black"
         onClick={triggerTransactionsHandler}
         classes="flex-1 px-3 py-1.5"
       >
@@ -289,7 +317,7 @@ function MaxButton({ balance, disabled }: { balance?: TokenAmount; disabled?: bo
     <SolidButton
       type="button"
       onClick={onClick}
-      color="gray"
+      color="black"
       disabled={disabled}
       classes="text-xs absolute right-0.5 top-2 bottom-0.5 px-2"
     >
